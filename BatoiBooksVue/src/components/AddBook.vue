@@ -53,14 +53,14 @@ export default {
         pages: '',
         state: '',
       },
-      modules: [], // Lista de módulos disponibles
+      modules: [],
     };
   },
   methods: {
     async fetchModules() {
       try {
         const response = await axios.get('http://localhost:3000/modules');
-        this.modules = response.data; // Guardamos los módulos obtenidos
+        this.modules = response.data; 
       } catch (error) {
         console.error('Error al obtener los módulos:', error);
       }
@@ -84,7 +84,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchModules(); // Obtenemos los módulos al cargar el componente
+    this.fetchModules();
   },
 };
 </script>
