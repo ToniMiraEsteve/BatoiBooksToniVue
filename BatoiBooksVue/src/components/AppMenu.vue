@@ -6,4 +6,4 @@
         <li><a href="#AppAbout">Acerca de...</a></li>
       </ul>
     </nav>
-  </template>
+</template>

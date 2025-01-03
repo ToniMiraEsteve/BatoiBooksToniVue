@@ -37,7 +37,7 @@
     </div>
     <button type="submit">Añadir</button>
   </form>
-</template>
+  </template>
 
 <script>
 import axios from 'axios';
