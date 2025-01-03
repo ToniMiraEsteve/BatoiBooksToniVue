@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="BooksList">
     <h2>Lista de Libros</h2>
     <div v-for="book in books" :key="book.id" class="book">
       <BookItem :book="book" @delete="deleteBook" />
@@ -30,14 +30,13 @@ export default {
     async deleteBook(id) {
       if (confirm(`¿Eliminar el libro con ID ${id}?`)) {
         try {
-          const response = await axios.delete(`http://localhost:3000/books/${id}`);
+          await axios.delete(`http://localhost:3000/books/${id}`);
           this.fetchBooks();
         } catch (error) {
-          console.error('Error al eliminar el libro:', error.response || error);
+          console.error('Error al eliminar el libro:', error);
         }
       }
-    }
-
+    },
   },
   mounted() {
     this.fetchBooks();

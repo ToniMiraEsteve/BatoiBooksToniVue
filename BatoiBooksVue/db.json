@@ -19,6 +19,28 @@
       "state": "good",
       "comments": "",
       "onSale": true
+    },
+    {
+      "id": "3",
+      "module": "5021",
+      "editorial": "1234",
+      "price": 1324,
+      "pages": 1234,
+      "state": "usado"
+    }
+  ],
+  "modules": [
+    {
+      "id": "5021",
+      "name": "Matemáticas Avanzadas"
+    },
+    {
+      "id": "5025",
+      "name": "Física Básica"
+    },
+    {
+      "id": "5026",
+      "name": "Historia Universal"
     }
   ]
 }

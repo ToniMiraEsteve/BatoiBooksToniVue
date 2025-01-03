@@ -1,13 +1,14 @@
 <template>
-  <form @submit.prevent="addBook">
+  <form @submit.prevent="addBook" id="AddBook">
     <label for="id">ID:</label>
     <input id="id" v-model="newBook.id" type="text" />
     <br>
     <label for="module">Módulo:</label>
     <select id="module" v-model="newBook.module" required>
       <option value="">Seleccionar módulo</option>
-      <option value="5021">5021</option>
-      <option value="5025">5025</option>
+      <option v-for="module in modules" :key="module.id" :value="module.id">
+        {{ module.name }}
+      </option>
     </select>
     <br>
     <label for="editorial">Editorial:</label>
@@ -45,23 +46,29 @@ export default {
   data() {
     return {
       newBook: {
-        id: null, // ID opcional, se puede dejar vacío si se genera en el backend
+        id: null,
         module: '',
         editorial: '',
         price: '',
         pages: '',
-        state: '',  // Bueno, Usado o Malo
+        state: '',
       },
+      modules: [], // Lista de módulos disponibles
     };
   },
   methods: {
+    async fetchModules() {
+      try {
+        const response = await axios.get('http://localhost:3000/modules');
+        this.modules = response.data; // Guardamos los módulos obtenidos
+      } catch (error) {
+        console.error('Error al obtener los módulos:', error);
+      }
+    },
     async addBook() {
       try {
-        // Realizamos la petición POST al servidor para añadir el nuevo libro
         await axios.post('http://localhost:3000/books', this.newBook);
         alert('Libro añadido');
-        
-        // Opcionalmente, reiniciar el formulario
         this.newBook = {
           id: null,
           module: '',
@@ -75,6 +82,9 @@ export default {
         alert('Hubo un problema al añadir el libro.');
       }
     },
+  },
+  mounted() {
+    this.fetchModules(); // Obtenemos los módulos al cargar el componente
   },
 };
 </script>
