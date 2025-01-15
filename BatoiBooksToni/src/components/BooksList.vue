@@ -21,8 +21,11 @@ export default {
   },
   data() {
     return {
-      books: [],
+      books: [
+        
+      ],
       repository: new BooksRepository()
+      
     }
   },
   created() {
@@ -37,6 +40,7 @@ export default {
   },
   methods: {
     async getBooks() {
+
       try {
         const response = await this.repository.getAllBooks()
         this.books = response

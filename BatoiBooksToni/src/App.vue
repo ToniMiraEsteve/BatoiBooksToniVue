@@ -28,11 +28,7 @@ export default {
   </header>
   <div>
     <app-menu></app-menu>
-    <app-messages></app-messages>
-    <books-list></books-list>
-    <add-book></add-book>
-    <app-cart></app-cart>
-    <app-about></app-about>
+    <router-view />
   </div>
 
   <footer>Juan Segura - DWEC</footer>

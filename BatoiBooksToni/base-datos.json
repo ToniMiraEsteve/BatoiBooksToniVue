@@ -1,0 +1,66 @@
+{
+    "books": [
+        {
+            "id": 1,
+            "idModule": "1",
+            "publisher": "Anaya",
+            "price": 29.99,
+            "pages": 350,
+            "status": "Nuevo",
+            "soldDate": "2021-01-01",
+            "comments": "Libro de programación en Java"
+        },
+        {
+            "id": 2,
+            "idModule": "1",
+            "publisher": "Santillana",
+            "price": 35.50,
+            "pages": 400,
+            "status": "Usado",
+            "soldDate": "2021-02-15",
+            "comments": "Libro de matemáticas avanzadas"
+        },
+        {
+            "id": 3,
+            "idModule": "2",
+            "publisher": "McGraw-Hill",
+            "price": 45.00,
+            "pages": 500,
+            "status": "Nuevo",
+            "soldDate": "2021-03-10",
+            "comments": "Libro de física teórica"
+        },
+        {
+            "id": 4,
+            "idModule": "3",
+            "publisher": "Pearson",
+            "price": 40.00,
+            "pages": 450,
+            "status": "Usado",
+            "soldDate": "2021-04-20",
+            "comments": "Libro de química orgánica"
+        }
+    ],
+    "modules": [
+        {
+            "code": "1",
+            "cliteral": "Programación"
+        },
+        {
+            "code": "2",
+            "cliteral": "Matemáticas"
+        },
+        {
+            "code": "3",
+            "cliteral": "Programación"
+        },
+        {
+            "code": "4",
+            "cliteral": "Matemáticas"
+        },
+        {
+            "code": "5",
+            "cliteral": "Física"
+        }
+    ]
+}

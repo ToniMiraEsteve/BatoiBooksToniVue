@@ -10,13 +10,14 @@
       <div>
         <label>Módulo:</label>
         <select v-model="book.idModule" required>
-          <option value="">- Selecciona un módulo -</option>
+          <option value="" disabled>- Selecciona un módulo -</option>
           <option v-for="module in modules" :key="module.code" :value="module.code">
             {{ module.cliteral }}
-          </option></select
-        ><br />
+          </option>
+        </select><br />
         <span class="error"></span>
       </div>
+
 
       <div>
         <label>Editorial:</label>
@@ -66,7 +67,13 @@ import { store } from '../store'
 export default {
   data() {
     return {
-      book: {},
+      book: {
+        idModule: "",
+        publisher: "",
+        price: null,
+        pages: null,
+        status: "Nuevo",
+      },
       modules: [],
       repository: new BooksRepository()
     }
