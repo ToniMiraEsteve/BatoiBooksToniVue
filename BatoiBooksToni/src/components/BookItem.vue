@@ -14,7 +14,7 @@
       <button class="cart add-cart" title="Añadir al carrito">
         <cart-plus></cart-plus>
       </button>
-      <button class="edit" title="Editar">
+      <button class="edit" title="Editar" @click="$router.push(`/edit-book/${book.id}`)">
         <pencil></pencil>
       </button>
       <button class="delete" title="Eliminar" @click="remove">

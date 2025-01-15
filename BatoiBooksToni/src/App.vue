@@ -7,6 +7,7 @@ import AppAbout from './components/AppAbout.vue'
 import AppCart from './components/AppCart.vue'
 
 
+
 export default {
   components: {
     AppMenu,
