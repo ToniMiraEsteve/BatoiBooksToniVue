@@ -30,6 +30,15 @@ export default class BooksRepository {
     return response.data
   }
 
+  async updateBook(id, book) {
+    try {
+      const response = await apiClient.put(`/books/${id}`, book);
+      return response.data;
+    } catch (error) {
+      throw new Error(`No se pudo actualizar el libro: ${error.response?.data?.message || error.message}`);
+    }
+  }
+
   async removeBook(id) {
     const response = await apiClient.delete(`/books/${id}`)
     return response.data

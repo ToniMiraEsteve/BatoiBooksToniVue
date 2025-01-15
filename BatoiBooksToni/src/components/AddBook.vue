@@ -106,20 +106,22 @@ export default {
     },
     async loadBook() {
       try {
-        this.book = await this.repository.getBookById(this.id);
+        this.book = await this.repository.getBookById(this.id); 
       } catch (error) {
         store.setMessageAction(error.message);
       }
     },
     async handleSubmit() {
       try {
+        console.log("Datos enviados:", { id: this.id, book: this.book });
         if (this.isEditing) {
           await this.repository.updateBook(this.id, this.book);
         } else {
           await this.repository.addBook(this.book);
         }
-        this.$router.push('/'); // Redirigir a la lista de libros
+        this.$router.push('/'); 
       } catch (error) {
+        console.error("Error al guardar:", error);
         store.setMessageAction(error.message);
       }
     },
