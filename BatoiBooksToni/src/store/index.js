@@ -1,16 +1,42 @@
-import { reactive } from 'vue'
+import { defineStore } from 'pinia';
+import axios from 'axios';
 
-export const store = {
-  debug: true,
-  state: reactive({
-    messages: []
-  }),
-  setMessageAction(newValue) {
-    if (this.debug) console.log('setMessageAction triggered with ', newValue)
-    this.state.messages.push(newValue)
+
+export const store =  defineStore('main', {
+  state(){
+    return {
+      messages: [],
+      modules: []
+    }
   },
-  clearMessageAction(index) {
-    if (this.debug) console.log('clearMessageAction triggered with ', index)
-    this.state.messages.splice(index, 1)
+  action: {
+    setMessageAction(newValue) {
+      this.state.messages.push(newValue)
+    },
+    clearMessageAction(index) {
+      this.state.messages.splice(index, 1)
+    },
+  },
+  getters: {
+    getModulesCliteral(){
+      console.log(this.modules);
+      return this.modules.map(module => {
+        return {
+          code: module.code,
+          cliteral: module.cliteral,
+        }
+      })
+    },
+  },
+
+  actions: {
+    async fetchModules() {
+      try {
+      const response = await axios.get('http://localhost:3000/modules');
+      this.modules = response.data;
+      } catch (error) {
+      console.error('Error fetching modules:', error);
+      }
+    },
   }
-}
+})

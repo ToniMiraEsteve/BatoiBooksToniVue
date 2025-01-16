@@ -2,7 +2,7 @@
   <div class="card">
     <img :src="book.photo" :alt="'Libro: ' + book.id" />
     <div>
-      <h5>{{ book.idModule + ' (' + book.id + ')' }}</h5>
+      <h5>{{ modulesCodeCliteral + ' (' + book.id + ')' }}</h5>
       <h6>{{ book.publisher }}</h6>
       <p>Precio: {{ book.price  }} €</p>
       <p>Páginas: {{ book.pages }}</p>
@@ -28,8 +28,17 @@
 import Delete from 'vue-material-design-icons/Delete.vue'
 import CartPlus from 'vue-material-design-icons/CartPlus.vue'
 import Pencil from 'vue-material-design-icons/Pencil.vue'
+import { store } from '../store'
+import { mapActions } from 'pinia'
+
+
 
 export default {
+  computed: {
+    modulesCodeCliteral(){
+      return store().getModulesCliteral;
+    }
+  },
   components: {
     Delete,
     CartPlus,
@@ -41,7 +50,12 @@ export default {
       required: true
     }
   },
+  async created(){
+      await this.fetchModules()
+    
+  },
   methods: {
+    ...mapActions(store , ['fetchModules']),
     remove() {
       if (
         confirm(
@@ -54,7 +68,7 @@ export default {
       ) {
         this.$emit('remove')
       }
-    }
+    },
   }
 }
 </script>
