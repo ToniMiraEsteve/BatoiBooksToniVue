@@ -64,7 +64,7 @@
 <script>
 import BooksRepository from '../repositories/books.repository'
 import ModulesRepository from '../repositories/modules.repository'
-import { store } from '../store'
+import { useMainStore } from '../store'
 
 export default {
   props: {
@@ -101,14 +101,14 @@ export default {
       try {
         this.modules = await repository.getAllModules();
       } catch (error) {
-        store.setMessageAction(error.message);
+        useMainStore().setMessageAction(error.message);
       }
     },
     async loadBook() {
       try {
         this.book = await this.repository.getBookById(this.id); 
       } catch (error) {
-        store.setMessageAction(error.message);
+        useMainStore().setMessageAction(error.message);
       }
     },
     async handleSubmit() {
@@ -116,13 +116,14 @@ export default {
         console.log("Datos enviados:", { id: this.id, book: this.book });
         if (this.isEditing) {
           await this.repository.updateBook(this.id, this.book);
+          useMainStore().setMessageAction("Libro actualizado correctamente");
         } else {
           await this.repository.addBook(this.book);
+          useMainStore().setMessageAction("Libro añadido correctamente");
         }
         this.$router.push('/'); 
       } catch (error) {
-        console.error("Error al guardar:", error);
-        store.setMessageAction(error.message);
+        useMainStore().setMessageAction(error.message);
       }
     },
     async handleReset() {
@@ -147,4 +148,5 @@ export default {
 span.error {
   color: red;
 }
+
 </style>

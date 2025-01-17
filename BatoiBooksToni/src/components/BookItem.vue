@@ -28,7 +28,7 @@
 import Delete from 'vue-material-design-icons/Delete.vue'
 import CartPlus from 'vue-material-design-icons/CartPlus.vue'
 import Pencil from 'vue-material-design-icons/Pencil.vue'
-import { store } from '../store'  
+import { useMainStore } from '../store'  
 import { mapActions } from 'pinia'
 
 
@@ -36,7 +36,7 @@ import { mapActions } from 'pinia'
 export default {
   computed: {
     modulesCodeCliteral(){ 
-      const modules = store().getModulesCliteral;
+      const modules = useMainStore().getModulesCliteral;
       const modulo = modules.find(module => module.code === this.book.idModule);     
       return modulo ? modulo.cliteral : 'Módulo no encontrado';
     }
@@ -56,7 +56,7 @@ export default {
       await this.fetchModules()
   },
   methods: {
-    ...mapActions(store , ['fetchModules']), 
+    ...mapActions(useMainStore , ['fetchModules']), 
     remove() {
       if (
         confirm(

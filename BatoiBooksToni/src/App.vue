@@ -28,6 +28,9 @@ export default {
     <h1>BatoiBooks</h1>
   </header>
   <div>
+    <app-messages></app-messages>
+  </div>
+  <div>
     <app-menu></app-menu>
     <router-view />
   </div>

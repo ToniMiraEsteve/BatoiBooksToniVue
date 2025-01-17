@@ -13,7 +13,7 @@
 <script>
 import BookItem from './BookItem.vue'
 import BooksRepository from '../repositories/books.repository'
-import { store } from '../store'
+import { useMainStore } from '../store'
 
 export default {
   components: {
@@ -46,7 +46,7 @@ export default {
         this.books = response
       } catch (error) {
         console.error(error.message)
-        store.setMessageAction(error.message)
+        useMainStore.setMessageAction(error.message)
       }
     },
     async delBook(id, index) {
@@ -54,7 +54,7 @@ export default {
         await this.repository.removeBook(id)
         this.books.splice(index, 1)
       } catch (error) {
-        store.setMessageAction(error.message)
+        useMainStore.setMessageAction(error.message)
       }
     }
   }

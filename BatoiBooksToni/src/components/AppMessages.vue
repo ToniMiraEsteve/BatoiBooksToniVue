@@ -5,7 +5,11 @@
       role="alert"
       v-for="(message, index) in messages"
       :key="index"
-    >
+      :class="[
+        'alert alert-dismissible',
+        message.type === 'error' ? 'alert-danger' : 'alert-success'
+      ]"
+    > 
       {{ message }}
       <button
         type="button"
@@ -21,27 +25,26 @@
 </template>
 
 <script>
-import { store } from '../store/index'
+import { useMainStore } from '../store'
+
 
 export default {
-  computed: {
-    messages() {
-      return store.state.messages
-    }
+  setup() {
+    const store = useMainStore();
+    return {
+      messages: store.messages,
+      remove: (index) => store.clearMessageAction(index),
+    };
   },
-  methods: {
-    remove(index) {
-      store.clearMessageAction(index)
-    }
-  }
-}
+};
 </script>
 
+
 <style scoped>
-.error {
+.alert-danger {
   background-color: lightcoral;
 }
-.info {
+.alert-success {
   background-color: lightgreen;
 }
 </style>
