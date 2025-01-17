@@ -28,15 +28,17 @@
 import Delete from 'vue-material-design-icons/Delete.vue'
 import CartPlus from 'vue-material-design-icons/CartPlus.vue'
 import Pencil from 'vue-material-design-icons/Pencil.vue'
-import { store } from '../store'
+import { store } from '../store'  
 import { mapActions } from 'pinia'
 
 
 
 export default {
   computed: {
-    modulesCodeCliteral(){
-      return store().getModulesCliteral;
+    modulesCodeCliteral(){ 
+      const modules = store().getModulesCliteral;
+      const modulo = modules.find(module => module.code === this.book.idModule);     
+      return modulo ? modulo.cliteral : 'Módulo no encontrado';
     }
   },
   components: {
@@ -52,10 +54,9 @@ export default {
   },
   async created(){
       await this.fetchModules()
-    
   },
   methods: {
-    ...mapActions(store , ['fetchModules']),
+    ...mapActions(store , ['fetchModules']), 
     remove() {
       if (
         confirm(

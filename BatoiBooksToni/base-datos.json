@@ -4,7 +4,7 @@
       "id": "1",
       "idModule": "1",
       "publisher": "Anaya",
-      "price": 29.99,
+      "price": 29.98,
       "pages": 350,
       "status": "Usado",
       "soldDate": "2021-01-01",
@@ -54,7 +54,7 @@
     },
     {
       "code": "3",
-      "cliteral": "Programación",
+      "cliteral": "cocina",
       "id": "3af0"
     },
     {

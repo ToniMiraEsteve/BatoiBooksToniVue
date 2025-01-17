@@ -19,21 +19,22 @@ export const store =  defineStore('main', {
   },
   getters: {
     getModulesCliteral(){
-      console.log(this.modules);
       return this.modules.map(module => {
         return {
           code: module.code,
           cliteral: module.cliteral,
         }
       })
+      
     },
+    
   },
 
   actions: {
     async fetchModules() {
       try {
-      const response = await axios.get('http://localhost:3000/modules');
-      this.modules = response.data;
+        const response = await axios.get('http://localhost:3000/modules');
+        this.modules = response.data;
       } catch (error) {
       console.error('Error fetching modules:', error);
       }

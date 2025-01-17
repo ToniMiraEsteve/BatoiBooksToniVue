@@ -127,7 +127,7 @@ export default {
     },
     async handleReset() {
       if (this.isEditing) {
-        this.loadBook(); // Cargar los datos originales del libro
+        this.loadBook();
       } else {
         this.book = {
           idModule: "",
