@@ -62,8 +62,7 @@
 
 
 <script>
-import BooksRepository from '../repositories/books.repository'
-import ModulesRepository from '../repositories/modules.repository'
+import { mapActions } from 'pinia'
 import { useMainStore } from '../store'
 
 export default {
@@ -83,52 +82,46 @@ export default {
         status: "new",
         comments: "",
       },
-      modules: [],
       isEditing: false,
-      repository: new BooksRepository(),
     }
   },
+  computed: {
+    modules() {
+      return useMainStore().modules;
+    },
+  },
   mounted() {
+    const store = useMainStore();
     this.isEditing = !!this.id;
-    this.loadModules();
+    store.fetchModules();
     if (this.isEditing) {
-      this.loadBook();
+      const books = store.books.find(book => book.id === this.id);
+      if (books) {
+        this.book = { ...books };
+      }
     }
   },
   methods: {
-    async loadModules() {
-      const repository = new ModulesRepository();
-      try {
-        this.modules = await repository.getAllModules();
-      } catch (error) {
-        useMainStore().setMessageAction(error.message);
-      }
-    },
-    async loadBook() {
-      try {
-        this.book = await this.repository.getBookById(this.id); 
-      } catch (error) {
-        useMainStore().setMessageAction(error.message);
-      }
-    },
     async handleSubmit() {
       try {
-        console.log("Datos enviados:", { id: this.id, book: this.book });
+        const store = useMainStore();
         if (this.isEditing) {
-          await this.repository.updateBook(this.id, this.book);
-          useMainStore().setMessageAction("Libro actualizado correctamente");
+          await store.updateBook(this.book);
+          store.setMessageAction('Libro actualizado correctamente');
         } else {
-          await this.repository.addBook(this.book);
-          useMainStore().setMessageAction("Libro añadido correctamente");
+          await store.addBook(this.book);
+          store.setMessageAction('Libro añadido correctamente');
         }
-        this.$router.push('/'); 
+        this.$router.push('/');
       } catch (error) {
-        useMainStore().setMessageAction(error.message);
+        store.setMessageAction(error.message);
       }
     },
     async handleReset() {
       if (this.isEditing) {
-        this.loadBook();
+        const store = useMainStore();
+        const books = store.books.find(book => book.id === this.id);
+        this,books = books ? { ...books } : this.book;
       } else {
         this.book = {
           idModule: "",

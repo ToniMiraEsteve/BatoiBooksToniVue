@@ -12,51 +12,27 @@
 
 <script>
 import BookItem from './BookItem.vue'
-import BooksRepository from '../repositories/books.repository'
 import { useMainStore } from '../store'
 
 export default {
   components: {
     BookItem
   },
-  data() {
-    return {
-      books: [
-        
-      ],
-      repository: new BooksRepository()
-      
-    }
-  },
-  created() {
-    this.getBooks()
-  },
   computed: {
+    books: {
+      get() {
+        return useMainStore().books;
+      }
+    },
     total: {
       get() {
         return this.books.length;
       }
     }
   },
-  methods: {
-    async getBooks() {
-
-      try {
-        const response = await this.repository.getAllBooks()
-        this.books = response
-      } catch (error) {
-        console.error(error.message)
-        useMainStore.setMessageAction(error.message)
-      }
-    },
-    async delBook(id, index) {
-      try {
-        await this.repository.removeBook(id)
-        this.books.splice(index, 1)
-      } catch (error) {
-        useMainStore.setMessageAction(error.message)
-      }
-    }
-  }
+  mounted() {
+    const store = useMainStore();
+    store.fetchBooks();
+  },
 }
 </script>

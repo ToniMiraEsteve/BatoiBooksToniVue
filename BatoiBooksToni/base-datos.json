@@ -39,6 +39,15 @@
       "status": "Usado",
       "soldDate": "2021-04-20",
       "comments": "Libro de química orgánica"
+    },
+    {
+      "id": "5",
+      "idModule": "2",
+      "publisher": "PEPYMILA",
+      "price": 30,
+      "pages": 10,
+      "status": "Nuevo",
+      "comments": ""
     }
   ],
   "modules": [

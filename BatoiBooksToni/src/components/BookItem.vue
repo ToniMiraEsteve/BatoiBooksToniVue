@@ -34,6 +34,12 @@ import { mapActions } from 'pinia'
 
 
 export default {
+  props: {
+    book: {
+      type: Object,
+      required: true,
+    },
+  },
   computed: {
     modulesCodeCliteral(){ 
       const modules = useMainStore().getModulesCliteral;
@@ -46,18 +52,13 @@ export default {
     CartPlus,
     Pencil,
   },
-  props: {
-    book: {
-      type: Object,
-      required: true
-    }
-  },
   async created(){
       await this.fetchModules()
   },
   methods: {
     ...mapActions(useMainStore , ['fetchModules']), 
-    remove() {
+    async remove() {
+      const store = useMainStore();
       if (
         confirm(
           'Vas a borrar el libro con id ' +
@@ -67,7 +68,7 @@ export default {
             '"'
         )
       ) {
-        this.$emit('remove')
+        await store.removeBook(this.book.id);
       }
     },
   }
