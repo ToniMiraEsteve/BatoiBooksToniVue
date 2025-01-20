@@ -7,7 +7,8 @@ export const useMainStore =  defineStore('main', {
     return {
       messages: [],
       books: [],
-      modules: []
+      modules: [],
+      cart: JSON.parse(localStorage.getItem('cart')) || []
     }
   },
   actions: {
@@ -62,6 +63,23 @@ export const useMainStore =  defineStore('main', {
       } catch (error) {
         this.addMessage(error.message);
       }
+    },
+    addTocart(book) {
+      const exists = this.cart.find((item) => item.id === book.id);
+      if (!exists) {
+        this.cart.push(book);
+        localStorage.setItem('cart', JSON.stringify(this.cart));
+      } else {
+        console.warn('El libro ya está en el carrito');
+      }
+    },
+    async removeToCart(idbook){
+      this.cart = this.cart.filter((book) => book.id !== idbook);
+      localStorage.setItem('cart', JSON.stringify(this.cart));
+    },
+    async clearCart(){
+      this.cart = [];
+      localStorage.removeItem('cart');
     },
     addMessage(message) {
       this.messages.push(message);

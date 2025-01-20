@@ -11,23 +11,12 @@
       <p>Comentarios: {{ book.comments || '' }}</p>
     </div>
     <div>
-      <button class="cart add-cart" title="Añadir al carrito">
-        <cart-plus></cart-plus>
-      </button>
-      <button class="edit" title="Editar" @click="$router.push(`/edit-book/${book.id}`)">
-        <pencil></pencil>
-      </button>
-      <button class="delete" title="Eliminar" @click="remove">
-        <delete></delete>
-      </button>
+      <slot name="buttons"></slot>
     </div>
   </div>
 </template>
 
 <script>
-import Delete from 'vue-material-design-icons/Delete.vue'
-import CartPlus from 'vue-material-design-icons/CartPlus.vue'
-import Pencil from 'vue-material-design-icons/Pencil.vue'
 import { useMainStore } from '../store'  
 import { mapActions } from 'pinia'
 
@@ -46,11 +35,6 @@ export default {
       const modulo = modules.find(module => module.code === this.book.idModule);     
       return modulo ? modulo.cliteral : 'Módulo no encontrado';
     }
-  },
-  components: {
-    Delete,
-    CartPlus,
-    Pencil,
   },
   async created(){
       await this.fetchModules()
