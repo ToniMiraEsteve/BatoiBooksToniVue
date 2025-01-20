@@ -55,7 +55,7 @@
         <span class="error"></span>
       </div>
       <button type="submit">{{ isEditing ? 'Guardar cambios' : 'Añadir' }}</button>
-      <button type="reset" @click="handleReset">{{ isEditing ? 'Reiniciar cambios' : 'Resetear' }}</button>
+      <button @click.prevent="handleReset">{{ isEditing ? 'Reiniciar cambios' : 'Resetear' }}</button>
     </form>
   </div>
 </template>
@@ -117,12 +117,14 @@ export default {
       }
     },
     async handleReset() {
-      if (this.isEditing) {
-        const store = useMainStore();
-        const books = await store.books.find(book => book.id === this.id);
-        console.log(books);
-        
-        this.book = books ? { ...books } : this.book;
+      const store = useMainStore();
+      if (this.isEditing) { 
+        const bookRestore = store.books.find(bookse => bookse.id === this.id);      
+        if (bookRestore) {   
+          this.book =  { ...bookRestore } ;
+        } else {
+          store.addMessage({ text: 'El libro no se encontró para reiniciar', type: 'error' });
+        }
       } else {
         this.book = {
           idModule: "",
