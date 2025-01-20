@@ -12,18 +12,12 @@ export const useMainStore =  defineStore('main', {
     }
   },
   actions: {
-    async setMessageAction(newValue) {
-      await this.messages.push(newValue)     
-    },
-    async clearMessageAction(index) {
-      await this.messages.splice(index, 1)
-    },
     async fetchModules() {
       try {
         const response = await axios.get('http://localhost:3000/modules');
         this.modules = response.data;
       } catch (error) {
-      console.error('Error fetching modules:', error);
+        this.addMessage({ text: 'Error fetching modules', type: 'error' });
       }
     },
     async fetchBooks() {
@@ -31,16 +25,16 @@ export const useMainStore =  defineStore('main', {
         const response = await axios.get('http://localhost:3000/books');
         this.books = response.data;
       } catch (error) {
-        this.addMessage(error.message);
+        this.addMessage({ text: error.message, type: 'error'});
       }
     },
     async addBook(newBook) {
       try {
         const response = await axios.post('http://localhost:3000/books', newBook);
         this.books.push(response.data);
-        this.addMessage('Libro añadido correctamente');
+        this.addMessage({ text: 'Libro añadido correctamente', type: 'success'});
       } catch (error) {
-        this.addMessage(error.message);
+        this.addMessage({ text: error.message, type: 'error'});
       }
     },
     async updateBook(id, updatedBook) {
@@ -50,42 +44,43 @@ export const useMainStore =  defineStore('main', {
         if (index !== -1) {
           this.books[index] = { ...this.books[index], ...updatedBook };
         }
-        this.addMessage('Libro actualizado correctamente');
+        this.addMessage({ text: 'Libro actualizado correctamente', type: 'success'});
       } catch (error) {
-        this.addMessage(error.message);
+        this.addMessage({ text: error.message, type: 'error'});
       }
     },
     async deleteBook(id) {
       try {
         await axios.delete(`http://localhost:3000/books/${id}`);
         this.books = this.books.filter((book) => book.id !== id);
-        this.addMessage('Libro eliminado correctamente');
+        this.cart = this.cart.filter((book) => book.id !== id);
+        this.addMessage({ text:'Libro eliminado correctamente', type: 'success'});
       } catch (error) {
-        this.addMessage(error.message);
+        this.addMessage({ text: error.message, type: 'error'});
       }
     },
-    addTocart(book) {
+    async addTocart(book) {
       const exists = this.cart.find((item) => item.id === book.id);
       if (!exists) {
-        this.cart.push(book);
+        await this.cart.push(book);
         localStorage.setItem('cart', JSON.stringify(this.cart));
       } else {
-        console.warn('El libro ya está en el carrito');
+        console.warn({ text: 'El libro ya está en el carrito', type: 'error'});
       }
     },
-    async removeToCart(idbook){
+    removeToCart(idbook){
       this.cart = this.cart.filter((book) => book.id !== idbook);
       localStorage.setItem('cart', JSON.stringify(this.cart));
     },
-    async clearCart(){
+    clearCart(){
       this.cart = [];
       localStorage.removeItem('cart');
     },
-    addMessage(message) {
-      this.messages.push(message);
+    async addMessage(message) {
+      await this.messages.push(message);
     },
-    clearMessage(index) {
-      this.messages.splice(index, 1);
+    async clearMessage(index) {
+      await this.messages.splice(index, 1);
     },
   },
   getters: {

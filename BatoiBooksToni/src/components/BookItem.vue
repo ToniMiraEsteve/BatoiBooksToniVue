@@ -41,20 +41,6 @@ export default {
   },
   methods: {
     ...mapActions(useMainStore , ['fetchModules']), 
-    async remove() {
-      const store = useMainStore();
-      if (
-        confirm(
-          'Vas a borrar el libro con id ' +
-            this.book.id +
-            ' del módulo "' +
-            this.book.idModule +
-            '"'
-        )
-      ) {
-        await store.removeBook(this.book.id);
-      }
-    },
   }
 }
 </script>

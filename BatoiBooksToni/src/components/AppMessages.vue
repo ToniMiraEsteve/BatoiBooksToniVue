@@ -5,12 +5,10 @@
       role="alert"
       v-for="(message, index) in messages"
       :key="index"
-      :class="[
-        'alert alert-dismissible',
-        message.type === 'error' ? 'alert-danger' : 'alert-success'
-      ]"
+      :class="['alert', message.type === 'error' ? 'alert-danger' : 'alert-success']"
+      :role="'alert'"
     > 
-      {{ message }}
+      {{ message.text }}
       <button
         type="button"
         class="btn-close"
@@ -33,7 +31,7 @@ export default {
     const store = useMainStore();
     return {
       messages: store.messages,
-      remove: (index) => store.clearMessageAction(index),
+      remove: (index) => store.clearMessage(index),
     };
   },
 };

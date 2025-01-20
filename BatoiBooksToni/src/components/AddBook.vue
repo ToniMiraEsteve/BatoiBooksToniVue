@@ -106,15 +106,14 @@ export default {
       try {
         const store = useMainStore();
         if (this.isEditing) {
-          await store.updateBook(this.book);
-          store.setMessageAction('Libro actualizado correctamente');
+          await store.updateBook(this.book.id,this.book);
         } else {
           await store.addBook(this.book);
-          store.setMessageAction('Libro añadido correctamente');
         }
         this.$router.push('/');
       } catch (error) {
-        store.setMessageAction(error.message);
+        const store = useMainStore();
+        store.addMessage(error.message);
       }
     },
     async handleReset() {

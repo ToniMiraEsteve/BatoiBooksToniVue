@@ -16,7 +16,7 @@
       <button class="edit" title="Editar" @click="$router.push(`/edit-book/${book.id}`)">
         <pencil></pencil>
       </button>
-      <button class="delete" title="Eliminar" @click="remove">
+      <button class="delete" title="Eliminar" @click="removeBook(book.id)">
         <delete></delete>
       </button>
     </template> 
@@ -61,6 +61,10 @@ export default {
       const store = useMainStore();
       return store.cart.some(book => book.id === bookId);
     },
+    removeBook(bookId) {
+      const store = useMainStore();
+      store.deleteBook(bookId);
+    }
   },
   mounted() {
     const store = useMainStore();
