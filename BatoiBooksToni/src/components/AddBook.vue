@@ -1,52 +1,52 @@
 <template>
   <div>
-    <form @submit.prevent="handleSubmit" novalidate>
+    <Form @submit="onSubmit" :validation-schema="mySchema">
       <legend>{{ isEditing ? 'Editar libro' : 'Añadir libro' }}</legend>
       <div>
         <label>Id:</label>
-        <input type="text" v-model="book.id" :disabled="isEditing" /><br />
-        <span class="error"></span>
+        <Field name="id" type="text" v-model="book.id" :disabled="isEditing" /><br />
+        <ErrorMessage name="id"></ErrorMessage>
       </div>
       <div>
         <label>Módulo:</label>
-        <select v-model="book.idModule" required>
+        <Field as="select" name="modulo" v-model="book.idModule" required>
           <option value="" disabled>- Selecciona un módulo -</option>
           <option v-for="module in modules" :key="module.code" :value="module.code">
             {{ module.cliteral }}
           </option>
-        </select><br />
-        <span class="error"></span>
+        </Field><br />
+        <ErrorMessage name="modulo"></ErrorMessage>
       </div>
       <div>
         <label>Editorial:</label>
-        <input type="text" v-model="book.publisher" required /><br />
-        <span class="error"></span>
+        <Field type="text" name="publisher" v-model="book.publisher" required /><br />
+        <ErrorMessage name="publisher"></ErrorMessage>
       </div>
       <div>
         <label>Precio:</label>
-        <input type="number" v-model="book.price" required min="0" step="0.01" /><br />
-        <span class="error"></span>
+        <Field type="number" name="price" v-model="book.price" required step="0.01" /><br />
+        <ErrorMessage name="price"></ErrorMessage>
       </div>
       <div>
         <label>Páginas:</label>
-        <input type="number" v-model="book.pages" required min="0" /><br />
-        <span class="error"></span>
+        <Field type="number" name="pages" v-model="book.pages" required min="0" /><br />
+        <ErrorMessage name="pages"></ErrorMessage>
       </div>
       <div>
         <label>Estado:</label>
         <div>
-          <label><input type="radio" name="status" v-model="book.status" value="Nuevo" required />Nuevo</label>
+          <label><Field type="radio" name="status" v-model="book.status" value="Nuevo" required />Nuevo</label>
         </div>
         <div>
-          <label><input type="radio" name="status" v-model="book.status" value="Bueno" />Bueno</label>
+          <label><Field type="radio" name="status" v-model="book.status" value="Bueno" />Bueno</label>
         </div>
         <div>
-          <label><input type="radio" name="status" v-model="book.status" value="Usado" />Usado</label>
+          <label><Field type="radio" name="status" v-model="book.status" value="Usado" />Usado</label>
         </div>
         <div>
-          <label><input type="radio" name="status" v-model="book.status" value="Malo" />Malo</label>
+          <label><Field type="radio" name="status" v-model="book.status" value="Malo" />Malo</label>
         </div>
-        <span class="error"></span>
+        <ErrorMessage name="status"></ErrorMessage>
       </div>
 
       <div>
@@ -56,16 +56,22 @@
       </div>
       <button type="submit">{{ isEditing ? 'Guardar cambios' : 'Añadir' }}</button>
       <button type="reset" @click="handleReset">{{ isEditing ? 'Reiniciar cambios' : 'Resetear' }}</button>
-    </form>
+    </Form>
   </div>
 </template>
 
 
 <script>
-import { mapActions } from 'pinia'
+import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from 'yup';
 import { useMainStore } from '../store'
 
 export default {
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+  },
   props: {
     id: {
       type: String,
@@ -73,6 +79,13 @@ export default {
     },
   },
   data() {
+    const mySchema = yup.object({
+      modulo: yup.string().required('El módulo es obligatorio'),
+      publisher: yup.string().required('La editorial es obligatoria'),
+      price: yup.number('Tiene que ser un numero').required('El precio es obligatorio').min(0, 'El precio no puede ser negativo'), 
+      pages: yup.number('Tiene que ser un numero').required('Las paginas son obligatorias').min(0, 'Las paginas no pueden ser negativas'),
+      status: yup.string().required('El estado es obligatorio'),
+    })
     return {
       book: {
         idModule: "",
@@ -83,6 +96,7 @@ export default {
         comments: "",
       },
       isEditing: false,
+      mySchema,
     }
   },
   computed: {
@@ -139,7 +153,7 @@ export default {
 </script>
 
 <style scoped>
-span.error {
+span {
   color: red;
 }
 
