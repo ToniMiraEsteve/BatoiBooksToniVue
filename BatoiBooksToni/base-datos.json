@@ -2,13 +2,13 @@
   "books": [
     {
       "id": "1",
-      "idModule": "1",
+      "idModule": "3",
       "publisher": "Anaya",
       "price": 29.98,
       "pages": 350,
-      "status": "Usado",
+      "status": "Nuevo",
       "soldDate": "2021-01-01",
-      "comments": "Libro de programación en Java"
+      "comments": "5"
     },
     {
       "id": "2",

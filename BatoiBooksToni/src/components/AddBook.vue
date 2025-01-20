@@ -119,8 +119,10 @@ export default {
     async handleReset() {
       if (this.isEditing) {
         const store = useMainStore();
-        const books = store.books.find(book => book.id === this.id);
-        this,books = books ? { ...books } : this.book;
+        const books = await store.books.find(book => book.id === this.id);
+        console.log(books);
+        
+        this.book = books ? { ...books } : this.book;
       } else {
         this.book = {
           idModule: "",
