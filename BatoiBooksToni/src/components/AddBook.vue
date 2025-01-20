@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Form @submit="onSubmit" :validation-schema="mySchema">
+    <Form @submit="handleSubmit" :validation-schema="mySchema">
       <legend>{{ isEditing ? 'Editar libro' : 'Añadir libro' }}</legend>
       <div>
         <label>Id:</label>
@@ -122,12 +122,18 @@ export default {
         if (this.isEditing) {
           await store.updateBook(this.book.id,this.book);
         } else {
-          await store.addBook(this.book);
+          const existingBook = store.books.find(book => book.id === this.book.id);
+          if (existingBook) {
+            await store.addMessage({type: 'error', text: 'El libro ya existe'});
+          }else{
+            await store.addBook(this.book);
+          }
+         
         }
         this.$router.push('/');
       } catch (error) {
         const store = useMainStore();
-        store.addMessage(error.message);
+        store.addMessage({text: error.message, type: 'error'});
       }
     },
     async handleReset() {
