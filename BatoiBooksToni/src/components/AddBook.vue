@@ -82,8 +82,8 @@ export default {
     const mySchema = yup.object({
       modulo: yup.string().required('El módulo es obligatorio'),
       publisher: yup.string().required('La editorial es obligatoria'),
-      price: yup.number('Tiene que ser un numero').required('El precio es obligatorio').min(0, 'El precio no puede ser negativo'), 
-      pages: yup.number('Tiene que ser un numero').required('Las paginas son obligatorias').min(0, 'Las paginas no pueden ser negativas'),
+      price: yup.number().typeError('Tiene que ser un numero').required('El precio es obligatorio').min(0, 'El precio no puede ser negativo'), 
+      pages: yup.number().typeError('Tiene que ser un numero').required('Las paginas son obligatorias').min(0, 'Las paginas no pueden ser negativas'),
       status: yup.string().required('El estado es obligatorio'),
     })
     return {
