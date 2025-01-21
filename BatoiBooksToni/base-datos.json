@@ -1,0 +1,79 @@
+{
+  "books": [
+    {
+      "id": "2",
+      "idModule": "1",
+      "publisher": "Santillana",
+      "price": 35.5,
+      "pages": 400,
+      "status": "Usado",
+      "soldDate": "2021-02-15",
+      "comments": "Libro de matemáticas avanzadas"
+    },
+    {
+      "id": "3",
+      "idModule": "2",
+      "publisher": "McGraw-Hill",
+      "price": 45,
+      "pages": 500,
+      "status": "Nuevo",
+      "soldDate": "2021-03-10",
+      "comments": "Libro de física teórica"
+    },
+    {
+      "id": "4",
+      "idModule": "3",
+      "publisher": "Pearson",
+      "price": 40,
+      "pages": 450,
+      "status": "Usado",
+      "soldDate": "2021-04-20",
+      "comments": "Libro de química orgánica"
+    },
+    {
+      "id": "5",
+      "idModule": "2",
+      "publisher": "PEPYMILA",
+      "price": 30,
+      "pages": 10,
+      "status": "Nuevo",
+      "comments": ""
+    },
+    {
+      "id": "1",
+      "idModule": "1",
+      "publisher": "Toni",
+      "price": 12,
+      "pages": 12,
+      "status": "Nuevo",
+      "comments": ""
+    }
+  ],
+  "modules": [
+    {
+      "code": "1",
+      "cliteral": "Programación",
+      "id": "6eb8"
+    },
+    {
+      "code": "2",
+      "cliteral": "Matemáticas",
+      "id": "5c53"
+    },
+    {
+      "code": "3",
+      "cliteral": "cocina",
+      "id": "3af0"
+    },
+    {
+      "code": "4",
+      "cliteral": "Matemáticas",
+      "id": "4a3a"
+    },
+    {
+      "code": "5",
+      "cliteral": "Física",
+      "id": "c106"
+    }
+  ]
+}
